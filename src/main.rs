@@ -1,15 +1,29 @@
 use dialoguer::{self, theme::ColorfulTheme, Confirm, Input, MultiSelect};
 use color_eyre::{eyre::{eyre, WrapErr}, Result};
+use std::env;
+use chrono::Utc;
+
+mod cli;
 
 const OUTPUT: [&str; 5] = ["pdf", "docx", "html", "pptx", "revealjs"];
 
 fn main() -> Result<()>{
+    // cli args
+    let input = env::args();
+    let conf = cli::Config::build(input);
+    conf.look();
+    cli::run(conf);
+
+    // date 
+    let today = Utc::now().format("%d-%b-%Y %H:%M:%S").to_string();
+    println!("today is {today}");
+
     // set up
     color_eyre::install()?;
     let ctheme = ColorfulTheme::default();
 
     // define path
-    let cwd_path = std::env::current_dir()?;
+    let cwd_path = env::current_dir()?;
     let qmd_dir_path = cwd_path.join("example");
     let qmd_file_path = qmd_dir_path.join("index.qmd");
 
