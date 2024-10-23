@@ -1,0 +1,9 @@
+[package]
+name = "testcli"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+chrono = "0.4.38"
+color-eyre = "0.6.3"
+dialoguer = "0.11.0"
